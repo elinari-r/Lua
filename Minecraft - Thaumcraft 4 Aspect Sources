@@ -1,0 +1,25 @@
+ -- very much still a work in progress, only the 'core' aspects are listed
+ 
+ local aspectSources = {
+	{name = "aer", sources = {"Air Infused Stone", "Air Shard", "Bedrock", "Feather", "Golems (all)", "Grass", "Jukebox", "Mixed Crystal Cluster", "Music Disc", "Sugarcane", "Sugar", "Thaumometer"}},
+	{name = "aqua", sources = {"Water Block", "Clay", "Boats", "Water Infused Stone", "Water Shards"}},
+	{name = "ignis", sources = {"Alumentum", "Blaze Rod", "Blaze Powder", "Flint and Steel", "Music Disc (11)", "Nitor", "Coal", "Charcoal", "Fire Shard", "Furnace", "Netherrack", "Netherwart", "Rose", "Brick", "Bricks", "NetherBrick (Block)", "Obsidian", "Lava Bucket"}},
+	{name = "ordo", sources = {"Silverwood Logs", "Chiseled Stone Bricks", "Bedrock", "Nether Star"}},
+	{name = "perditio", sources = {"Cobblestone", "Entropy Infused Stone", "Entropy Shards", "Mixed Crystal Cluster"}},
+	{name = "terra", sources = {"Cobblestone", "Dirt", "Grass block", "Stone"}}
+}
+
+local searchTerm = io.read()
+for iterator, v in pairs(aspectSources) do
+	if v.name == searchTerm then
+		for m, location in pairs(v.sources) do
+	print("Found in: " .. location)
+		end
+	end
+	for j, item in pairs(v.sources) do
+		if item == searchTerm then
+		print("Can be found in: " .. v.sources)
+		end
+	end
+end
+
