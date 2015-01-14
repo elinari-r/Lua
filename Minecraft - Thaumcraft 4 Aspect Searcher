@@ -1,0 +1,86 @@
+-- Thaumcraft 4 Aspect searcher. Enter the name of an aspect, it outputs what aspects it is comprised of 
+-- and what this aspect can be used to make
+-- The 'sources' section is not currently used, but will (hopefully) be available in a separate script (aspectsources_TC4.lua) soon
+
+local aspects = {
+	{name = "aer", madeBy = {"primal"}, modPack = "TC4.2", sources = {"Air Infused Stone", "Air Shard", "Bedrock", "Feather", "Golems (all)", "Grass", "Jukebox", "Mixed Crystal Cluster", "Music Disc", "Sugarcane", "Sugar", "Thaumometer"}},
+	{name = "aqua", madeBy = {"primal"}, modPack = "TC4.2", sources = {"Water Block", "Clay", "Boats", "Water Infused Stone", "Water Shards"}},
+	{name = "ignis", madeBy = {"primal"}, modPack = "TC4.2", sources = {"Alumentum", "Blaze Rod", "Blaze Powder", "Flint and Steel", "Music Disc (11)", "Nitor", "Coal", "Charcoal", "Fire Shard", "Furnace", "Netherrack", "Netherwart", "Rose", "Brick", "Bricks", "NetherBrick (Block)", "Obsidian", "Lava Bucket"}},
+	{name = "ordo", madeBy = {"primal"}, modPack = "TC4.2", sources = {"Silverwood Logs", "Chiseled Stone Bricks", "Bedrock", "Nether Star"}},
+	{name = "perditio", madeBy = {"primal"}, modPack = "TC4.2", sources = {"Cobblestone", "Entropy Infused Stone", "Entropy Shards", "Mixed Crystal Cluster"}},
+	{name = "terra", madeBy = {"primal"}, modPack = "TC4.2", sources = {"Cobblestone", "Dirt", "Grass block", "Stone"}},
+	{name = "gelum", madeBy = {"ignis", "perditio"}, modPack = "TC4.2"},
+	{name = "lux", madeBy = {"aer", "ignis"}, modPack = "TC4.2"},
+	{name = "motus", madeBy = {"aer", "ordo"}, modPack = "TC4.2"},
+	{name = "permutatio", madeBy = {"perditio", "ordo"}, modPack = "TC4.2"},
+	{name = "potentia", madeBy = {"ordo", "ignis"}, modPack = "TC4.2"},
+	{name = "saxum", madeBy = {"terra", "terra"}, modPack = "TC4.2"},
+	{name = "tempestas", madeBy = {"aer", "aqua"}, modPack = "TC4.2"},
+	{name = "vacuos", madeBy = {"aer", "perditio"}, modPack = "TC4.2"},
+	{name = "venenum", madeBy = {"aqua", "perditio"}, modPack = "TC4.2"},
+	{name = "victus", madeBy = {"aqua", "terra"}, modPack = "TC4.2"},
+	{name = "vitreus", madeBy = {"terra", "ordo"}, modPack = "TC4.2"},
+	{name = "bestia", madeBy = {"motus", "victus"}, modPack = "TC4.2"},
+	{name = "fames", madeBy = {"victus", "vacuos"}, modPack = "TC4.2"},
+	{name = "granum", madeBy = {"ordo", "victus"}, modPack = "TC4.2"},
+	{name = "herba", madeBy = {"victus", "terra"}, modPack = "TC4.2"},
+	{name = "iter", madeBy = {"motus", "terra"}, modPack = "TC4.2"},
+	{name = "limus", madeBy = {"victus", "aqua"}, modPack = "TC4.2"},
+	{name = "metallum", madeBy = {"terra", "vitreus"}, modPack = "TC4.2"},
+	{name = "mortuus", madeBy = {"victus", "perditio"}, modPack = "TC4.2"},
+	{name = "praecantio", madeBy = {"vacuos", "potentia"}, modPack = "TC4.2"},
+	{name = "sano", madeBy = {"victus", "ordo"}, modPack = "TC4.2"},
+	{name = "tenebrae", madeBy = {"vacuos", "lux"}, modPack = "TC4.2"},
+	{name = "vinculum", madeBy = {"motus", "perditio"}, modPack = "TC4.2"},
+	{name = "volatus", madeBy = {"aer", "motus"}, modPack = "TC4.2"},
+	{name = "alienis", madeBy = {"vacuos", "tenebrae"}, modPack = "TC4.2"},
+	{name = "arbor", madeBy = {"aer", "herba"}, modPack = "TC4.2"},
+	{name = "auram", madeBy = {"praecantio", "aer"}, modPack = "TC4.2"},
+	{name = "corpus", madeBy = {"mortuus", "bestia"}, modPack = "TC4.2"},
+	{name = "exanimis", madeBy = {"motus", "mortuus"}, modPack = "TC4.2"},
+	{name = "spiritus", madeBy = {"victus", "mortuus"}, modPack = "TC4.2"},
+	{name = "vitium", madeBy = {"praecantio", "perditio"}, modPack = "TC4.2"},
+	{name = "cognitio", madeBy = {"terra", "spiritus"}, modPack = "TC4.2"},
+	{name = "sensus", madeBy = {"aer", "spiritus"}, modPack = "TC4.2"},
+	{name = "humanus", madeBy = {"cognitio", "bestia"}, modPack = "TC4.2"},
+	{name = "instrumentum", madeBy = {"humanus", "ordo"}, modPack = "TC4.2"},
+	{name = "lucrum", madeBy = {"humanus", "fames"}, modPack = "TC4.2"},
+	{name = "messis", madeBy = {"herba", "humanus"}, modPack = "TC4.2"},
+	{name = "perfodio", madeBy = {"humanus", "terra"}, modPack = "TC4.2"},
+	{name = "fabrico", madeBy = {"humanus", "instrumentum"}, modPack = "TC4.2"},
+	{name = "machina", madeBy = {"motus", "instrumentum"}, modPack = "TC4.2"},
+	{name = "meto", madeBy = {"messis", "instrumentum"}, modPack = "TC4.2"},
+	{name = "pannus", madeBy = {"instrumentum", "bestia"}, modPack = "TC4.2"},
+	{name = "telum", madeBy = {"instrumentum", "perditio"}, modPack = "TC4.2"},
+	{name = "tutamen", madeBy = {"instrumentum", "terra"}, modPack = "TC4.2"},
+	{name = "exubitor", madeBy = {"alienis", "mortuus"}, modPack = "Thaumic Warden"},
+	{name = "superbia", madeBy = {"volatus", "vacuos"}, modPack = "Forbidden Magic"},
+	{name = "luxuria", madeBy = {"corpus", "fames"}, modPack = "Forbidden Magic"},
+	{name = "desidia", madeBy = {"vinculum", "spiritus"}, modPack = "Forbidden Magic"},
+	{name = "invidia", madeBy = {"sensus", "fames"}, modPack = "Forbidden Magic"},
+	{name = "gula", madeBy = {"fames", "vacuos"}, modPack = "Forbidden Magic"},
+	{name = "ira", madeBy = {"ignis", "telum"}, modPack = "Forbidden Magic"},
+	{name = "infernus", madeBy = {"ignis", "praecantio"}, modPack = "Forbidden Magic"},
+	{name = "sanctus", madeBy = {"spiritus", "auram"}, modPack = "The Elysium"},
+	{name = "radio", madeBy = {"potentia", "lux"}, modPack = "GregTech"},
+	{name = "nebrisum", madeBy = {"lucrum", "perfodio"}, modPack = "GregTech"},
+	{name = "strontio", madeBy = {"perditio", "cognitio"}, modPack = "GregTech"},
+	{name = "electrum", madeBy = {"potentia", "machina"}, modPack = "GregTech"},
+	{name = "magneto", madeBy = {"metallum", "iter"}, modPack = "GregTech"},
+	{name = "tempus", madeBy = {"vacuos", "ordo"}, modPack = "Magic Bees"}
+}
+
+
+local searchTerm = io.read()
+for iterator, v in pairs(aspects) do -- looking through all tables in 'aspects'
+	if v.name == searchTerm then
+		for m, ingredients in pairs(v.madeBy) do -- now we're in madeBy, go through it
+	print("Made using: " .. ingredients)
+		end
+	end
+	for j, item in pairs(v.madeBy) do -- for every item in madeBy
+		if item == searchTerm then
+		print("Used to make: " .. v.name .. "\tFrom modpack: " .. v.modPack)
+		end
+	end
+end
