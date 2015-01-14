@@ -1,0 +1,43 @@
+local N = 8 -- board size
+
+-- check whether position (a, c) is free from attacks
+local function isplaceok (a, n, c)				-- a is the row, n is the pool of queens, c is column
+	for i = 1, n - 1 do 						-- for each queen already placed
+		if (a[i] == c) or						-- same column?
+		   (a[i] - i == c - n) or				-- same diagonal?
+		   (a[i] + i == c + n) then				-- same diagonal?
+		   return false							-- place is taken/can be attacked
+		end
+	end
+	return true									-- no attacks, place is ok
+end
+
+
+-- print a board
+local function printsolution (a)
+	for i = 1, N do										-- i is rows
+		for j = 1, N do									-- j is columns
+			io.write(a[i] == j and "X" or "-", " ")		-- write an X if the location is true (valid for placing), otherwise write - then a space (" ")
+		end
+		io.write("\n")									-- after all the spaces for that row are filled, start a new line
+	end
+	io.write("\n")										-- when the board is full, start a new line
+end
+
+
+-- add to board 'a' all queens from 'n' to 'N'
+local function addqueen(a, n)
+	if n > N then 								-- all queens have been placed?
+		printsolution(a)
+	else						 				-- try and place the n-th queen
+		for c = 1, N do
+			if isplaceok(a, n, c) then			-- if the space is not occupied (isplaceok has returned true) then
+				a[n] = c 						-- place n'th queen at column 'c'
+				addqueen(a, n + 1)				-- add 1 to addqueen, as one queen is now placed (total of 8 queens available), start on the next row
+			end
+		end
+	end
+end
+
+-- run the program
+addqueen({}, 1)									-- run addqueen and create table (a) with a starting value of 1
