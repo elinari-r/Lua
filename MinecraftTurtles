@@ -1,0 +1,35 @@
+edit startup -- turtles check for a startup script when they turn on
+print("Name: " .. os.getComputerLabel())
+print("ID: " .. os.getComputerID())
+print("Fuel: " .. turtle.getFuelLevel())
+
+-- anything you put in startup will run when the turtle boots. 
+
+edit CheckFuel -- puts you in the editor in file CheckFuel
+print "Checking fuel..."
+if turtle.getFuelLevel() < 200 then
+	turtle.refuel(1)
+	print "Refuelling!"
+else
+	print "Good on fuel"
+end
+
+
+-- remember to press Ctrl to access the menu, and save it
+
+
+tunnel 10 -- will tunnel 10 spaces (or 9, I forget) in a 3x2 block
+
+excavate 2 -- excavates a 2x2 block downwards until inventory full or out of fuel
+
+-- when inventory is full, turtle returns to start point and ejects all its inventory. If you have obsidian pipe (or any
+-- transport pipe, I guess) that leads to a chest, it will suck it into that chest
+
+-- can set up a Charge Station (Misc Peripherals mod) to recharge them (REMEMBER TO USE LOW VOLTAGE ONLY!)
+
+-- melee turtle can be used as a mob grinder
+
+-- use this to set the name of your turtle, which allows it to keep its charge/programs when broken (among other things)
+label set <labelname>
+
+-- you can dye turtles! as of ComputerCraft 1.63
