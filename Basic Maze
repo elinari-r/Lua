@@ -1,0 +1,52 @@
+-- this maze uses tail calls instead of the 'while true do'
+
+print("Choose a direction - north, south, east, west?")
+function room1()
+	local move = io.read()
+	if move == "south" then
+	print("You went South. Where to now?")
+	return room3()
+	elseif move == "east" then
+	print("You went East. Where to now?")
+	return room2()
+	else
+		print("You can't go that way")
+		return room1() -- stay in the same room
+	end
+end
+
+function room2()
+	local move = io.read()
+	if move == "south" then
+	print("You went South.")
+	return room4()
+	elseif move == "west" then
+	print("You went West. Where to now?")
+	return room1()
+	else
+		print("You can't go that way")
+		return room2()
+	end
+end
+
+function room3()
+	local move = io.read()
+	if move == "north" then
+	print("You went North. Where to now?")
+	return room1()
+	elseif move == "east" then
+	print("You went East.")
+	return room4()
+	else
+		print("You can't go that way")
+		return room3()
+	end
+end
+
+function room4()
+	print("Congratulations! You made it!")
+end
+
+-- start the game with a call to the initial room:
+
+room1()
